@@ -49,8 +49,22 @@ const NoteState = (props) => {
         getAllNotes()
 
     }
+
+    const editNote = async ({id , title , description}) => {
+        const response = await fetch(`${basicUrl}${id}`, {
+            method : "PUT",
+            headers : {
+                "Content-Type": "application/json",
+                "Authorization" : `${authToken}`
+            },
+            body : JSON.stringify({title, description})
+        })
+        await response.json()
+        getAllNotes()
+
+    }
     return (
-          <NoteContext.Provider value={{note, addNote, getAllNotes, deleteNote}}>
+          <NoteContext.Provider value={{note, addNote, getAllNotes, deleteNote, editNote}}>
             <div>{props.children}</div>
           </NoteContext.Provider>
       );

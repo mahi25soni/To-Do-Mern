@@ -2,30 +2,35 @@ import React, {useContext, useEffect, useRef, useState} from 'react'
 import { NoteContext } from '../context/notes/NoteContext'
 import Noteitem from './Noteitem'
 export default function ViewNote() {
-    const {note , getAllNotes} = useContext(NoteContext)
+    const {note , getAllNotes, editNote} = useContext(NoteContext)
     useEffect(() => {
       getAllNotes()
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
-    const updateNote = (note) => {
-      refUpdate.current.click()
-    }
     const refUpdate = useRef(null)
+    const refCloseModal = useRef(null)
 
     const [notedata , setNotedata] = useState({id : "", title : "", description : ""})
+    const updateNote = (note) => {
+      refUpdate.current.click()
+      setNotedata ({id : note._id, title : "", description : ""})
+    }
+
    
     const inputOnChange = (event) => {
-      // console.log(notedata)
-      // console.log(event.target.value)
-      setNotedata({...note , [event.target.id] : event.target.value})
-      console.log(note)
+      setNotedata({...notedata , [event.target.id] : event.target.value})
+    }
+
+    const submitNote = () => {
+      editNote(notedata)
+      refCloseModal.current.click()
     }
 
   return (
     <>
     <div className="container mt-3">
-    <button type="button" ref={refUpdate} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" ref={refUpdate} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style={{display: 'none'}}>
         Launch demo modal
         </button>
 
@@ -49,8 +54,8 @@ export default function ViewNote() {
             </div>
             </div>
             <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Edit Note</button>
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" ref={refCloseModal}>Close</button>
+                <button type="button" className="btn btn-primary" onClick={submitNote}>Edit Note</button>
             </div>
             </div>
         </div>
