@@ -1,7 +1,7 @@
 import React , {useContext, useState}from 'react'
 import { NoteContext } from '../context/notes/NoteContext'
 export default function AddNote() {
-    const { note, setNote } = useContext(NoteContext)
+    const { addNote } = useContext(NoteContext)
 
     const [itemobject, setItemobject] = useState({
         "title": "",
@@ -9,13 +9,12 @@ export default function AddNote() {
     })
     function addToList(e) {
         // e.preventDefault()
-        setNote(note.concat(itemobject))
-        console.log("just after shit ", note)
+        console.log("nothig skdf s ", itemobject)
+        addNote(itemobject)
         setItemobject({
             "title": "",
             "description":""
         })
-        console.log("classlist ", e.target.classList)
         e.target.classList.remove("active")
     }
     function get_values(e) {

@@ -1,44 +1,56 @@
 import {NoteContext}  from './NoteContext'
 import { useState } from 'react'
 const NoteState = (props) => {
-    const intial_notes = [
-            {
-                "_id": "64961e09c199b74ed90ad217",
-                "title":"wake up sid",
-                "description": "add you second task",
-                "done": false,
-                "user_id": "6496131dad183e22d63f4b15",
-                "__v": 0
-            },
-            {
-                "_id": "64961e0dc199b74ed90ad21a",
-                "title":"wake up sid",
-                "description": "add you third task",
-                "done": false,
-                "user_id": "6496131dad183e22d63f4b15",
-                "__v": 0
-            },
-            {
-                "_id": "64961e14c199b74ed90ad21d",
-                "title":"wake up sid",
-                "description": "add you fourth task",
-                "done": false,
-                "user_id": "6496131dad183e22d63f4b15",
-                "__v": 0
-            },
-            {
-                "_id": "64961e18c199b74ed90ad220",
-                "title":"wake up sid",
-                "description": "add you fifth task",
-                "done": false,
-                "user_id": "6496131dad183e22d63f4b15",
-                "__v": 0
+
+    let basicUrl = "http://localhost:5000/tasks/"
+    let authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDk2MTMxZGFkMTgzZTIyZDYzZjRiMTUiLCJlbWFpbCI6InZlcm1AZ21haWwuY29tIiwiaWF0IjoxNjg3NTU5NTg1fQ.qsk6_2q4O8Zab-VJLq-mBVshtHmNffSHtcNLIoob5t0"
+    const [ note, setNote ] = useState([])
+
+
+    const getAllNotes = () =>{
+        fetch(`${basicUrl}`, {
+            method : 'GET',
+            headers : {
+                "Content-Type": "application/json",
+                "Authorization" : `${authToken}`
             }
-]
-    const [ note, setNote ] = useState(intial_notes)
+        })
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            setNote(data)
+        })
+    }
+
+    const addNote = async ({title , description}) =>{
+        const response = await fetch(`${basicUrl}`, {
+            method : "POST",
+            headers : {
+                "Content-Type": "application/json",
+                "Authorization" : `${authToken}`
+            },
+            body : JSON.stringify({title, description})
+        })
+        await response.json()
+        getAllNotes()
+    }
+     
     
+    const deleteNote = async (id) => {
+        const response = await fetch(`${basicUrl}${id}`, {
+            method : 'DELETE',
+            headers : {
+                "Content-Type": "application/json",
+                "Authorization" : `${authToken}`
+            }
+        })
+        await response.json()
+        getAllNotes()
+
+    }
     return (
-          <NoteContext.Provider value={{note, setNote}}>
+          <NoteContext.Provider value={{note, addNote, getAllNotes, deleteNote}}>
             <div>{props.children}</div>
           </NoteContext.Provider>
       );
