@@ -8,8 +8,7 @@ export default function AddNote() {
         "description":""
     })
     function addToList(e) {
-        // e.preventDefault()
-        console.log("nothig skdf s ", itemobject)
+        e.preventDefault()
         addNote(itemobject)
         setItemobject({
             "title": "",

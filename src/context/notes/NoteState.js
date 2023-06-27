@@ -1,9 +1,12 @@
 import {NoteContext}  from './NoteContext'
 import { useState } from 'react'
+// import  {useNavigate}  from "react-router-dom";
+
 const NoteState = (props) => {
+    // const history = useNavigate()
 
     let basicUrl = "http://localhost:5000/tasks/"
-    let authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDk2MTMxZGFkMTgzZTIyZDYzZjRiMTUiLCJlbWFpbCI6InZlcm1AZ21haWwuY29tIiwiaWF0IjoxNjg3NTU5NTg1fQ.qsk6_2q4O8Zab-VJLq-mBVshtHmNffSHtcNLIoob5t0"
+    // let authToken = localStorage.getItem("authorization")
     const [ note, setNote ] = useState([])
 
 
@@ -12,7 +15,7 @@ const NoteState = (props) => {
             method : 'GET',
             headers : {
                 "Content-Type": "application/json",
-                "Authorization" : `${authToken}`
+                "authorization" : localStorage.getItem("authorization")
             }
         })
         .then(response => {
@@ -28,7 +31,7 @@ const NoteState = (props) => {
             method : "POST",
             headers : {
                 "Content-Type": "application/json",
-                "Authorization" : `${authToken}`
+                "authorization" : localStorage.getItem("authorization")
             },
             body : JSON.stringify({title, description})
         })
@@ -42,7 +45,7 @@ const NoteState = (props) => {
             method : 'DELETE',
             headers : {
                 "Content-Type": "application/json",
-                "Authorization" : `${authToken}`
+                "authorization" : localStorage.getItem("authorization")
             }
         })
         await response.json()
@@ -55,7 +58,7 @@ const NoteState = (props) => {
             method : "PUT",
             headers : {
                 "Content-Type": "application/json",
-                "Authorization" : `${authToken}`
+                "authorization" : localStorage.getItem("authorization")
             },
             body : JSON.stringify({title, description})
         })
@@ -63,8 +66,50 @@ const NoteState = (props) => {
         getAllNotes()
 
     }
+
+
+    const userLogin = async ({email, password}) =>{
+        const response = await fetch("http://localhost:5000/auth/login/", {
+            method : "POST",
+            headers : {
+                "Content-Type": "application/json",
+            },
+            body : JSON.stringify({email, password})
+        })
+        const {status, data} = await response.json()
+        if(status){
+            localStorage.setItem("authorization", data)
+            return status;
+        }
+        else {
+            alert(data)
+            return status;
+        }
+        
+    }
+
+    
+    const userSignup = async ({username, email, password}) =>{
+        const response = await fetch("http://localhost:5000/auth/register/", {
+            method : "POST",
+            headers : {
+                "Content-Type": "application/json",
+            },
+            body : JSON.stringify({username, email, password})
+        })
+        const {status, data} = await response.json()
+        if(status){
+            alert("Welcome to your private data, Please Login to continue...")
+            return status
+        }
+        else {
+            alert(data)
+            return status;
+        }
+        
+    }
     return (
-          <NoteContext.Provider value={{note, addNote, getAllNotes, deleteNote, editNote}}>
+          <NoteContext.Provider value={{note, addNote, getAllNotes, deleteNote, editNote, userLogin, userSignup}}>
             <div>{props.children}</div>
           </NoteContext.Provider>
       );

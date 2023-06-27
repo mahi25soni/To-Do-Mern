@@ -1,9 +1,25 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React , {useEffect}from "react";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 
 export default function Navbar() {
+  const history = useNavigate()
+  // We we use 'a' then page wil reload and send us to our destination, but if we use "Link", it will send us to our desination, without refressing, that's what a single page application should do
+  // "Link" should be only use to routing, for other need, we should try button/a
   const path = useLocation().pathname
+
+  useEffect(()=> {
+    if(!localStorage.getItem("authorization")){
+      history("/login")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const logoutButton = () =>{
+    history("/login")
+    localStorage.removeItem("authorization")
+  }
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-secondary">
@@ -27,20 +43,26 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className= {`nav-link ${path==="/" ? "active":""}`} aria-current="page" href="/">
+                <Link className= {`nav-link ${path==="/" ? "active":""}`} aria-current="page" to="/">
                   <strong>
                     Home
                   </strong>
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${path==="/about" ? "active":""}`} href="/about">
+                <Link className={`nav-link ${path==="/about" ? "active":""}`} to="/about">
                   <strong>
                     About
                   </strong>
-                </a>
+                </Link>
               </li>
             </ul>
+          </div>
+          <div className="d-flex"> 
+            <Link className="btn btn-primary btn-sm mx-2" to="/login">Login</Link>
+            <Link className="btn btn-primary btn-sm mx-2" to="/signup">SignUp</Link>
+            <button className="btn btn-dark btn-sm mx-2" onClick={logoutButton}>LogOut</button>
+
           </div>
         </div>
       </nav>
