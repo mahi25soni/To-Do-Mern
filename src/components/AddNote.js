@@ -1,7 +1,9 @@
 import React , {useContext, useState}from 'react'
 import { NoteContext } from '../context/notes/NoteContext'
+import { AlertContext } from '../context/AlertContext'
 export default function AddNote() {
     const { addNote } = useContext(NoteContext)
+    const { settingAlert } = useContext(AlertContext)
 
     const [itemobject, setItemobject] = useState({
         "title": "",
@@ -15,6 +17,8 @@ export default function AddNote() {
             "description":""
         })
         e.target.classList.remove("active")
+        settingAlert("success", "New note has been added!")
+
     }
     function get_values(e) {
         setItemobject({...itemobject, [e.target.id] : e.target.value})

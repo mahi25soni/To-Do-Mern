@@ -1,11 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import { NoteContext } from '../context/notes/NoteContext'
 import Noteitem from './Noteitem'
+import { AlertContext } from '../context/AlertContext'
 export default function ViewNote() {
     const {note , getAllNotes, editNote} = useContext(NoteContext)
+    const {settingAlert } = useContext(AlertContext)
     useEffect(() => {
       getAllNotes()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line 
     },[])
 
     const refUpdate = useRef(null)
@@ -25,6 +27,7 @@ export default function ViewNote() {
     const submitNote = () => {
       editNote(notedata)
       refCloseModal.current.click()
+      settingAlert("primary", "Your note has been updated!")
     }
 
   return (
@@ -64,7 +67,7 @@ export default function ViewNote() {
         <div className="row">
         {note.map((i, element)=> {
             return <div className="col col-sm-3 "> 
-            <Noteitem  key = {i}  note = {element} editButton={updateNote}></Noteitem>
+            <Noteitem  key={i}  note = {element} editButton={updateNote}></Noteitem>
             </div>
         })}
         </div>

@@ -1,9 +1,8 @@
 import {NoteContext}  from './NoteContext'
-import { useState } from 'react'
-// import  {useNavigate}  from "react-router-dom";
+import { useState} from 'react'
+
 
 const NoteState = (props) => {
-    // const history = useNavigate()
 
     let basicUrl = "http://localhost:5000/tasks/"
     // let authToken = localStorage.getItem("authorization")
@@ -24,6 +23,7 @@ const NoteState = (props) => {
         .then(data => {
             setNote(data)
         })
+
     }
 
     const addNote = async ({title , description}) =>{
@@ -37,6 +37,8 @@ const NoteState = (props) => {
         })
         await response.json()
         getAllNotes()
+
+
     }
      
     
@@ -50,6 +52,8 @@ const NoteState = (props) => {
         })
         await response.json()
         getAllNotes()
+
+
 
     }
 
@@ -65,6 +69,7 @@ const NoteState = (props) => {
         await response.json()
         getAllNotes()
 
+
     }
 
 
@@ -79,11 +84,12 @@ const NoteState = (props) => {
         const {status, data} = await response.json()
         if(status){
             localStorage.setItem("authorization", data)
+
             return status;
         }
         else {
-            alert(data)
-            return status;
+
+            return data;
         }
         
     }

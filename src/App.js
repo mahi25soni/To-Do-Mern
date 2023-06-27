@@ -7,6 +7,7 @@ import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import NoteState from "./context/notes/NoteState";
+import { AlertState} from "./context/AlertContext";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   return (
     <>
     <NoteState>
+      <AlertState>
         <BrowserRouter>
           <Navbar />
           <Routes>
@@ -24,6 +26,7 @@ function App() {
 
           </Routes>
         </BrowserRouter>
+        </AlertState>
     </NoteState>
     </>
   );

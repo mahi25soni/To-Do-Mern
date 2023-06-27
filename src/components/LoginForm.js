@@ -1,16 +1,24 @@
 import React, { useState , useContext} from 'react'
 import { NoteContext } from '../context/notes/NoteContext'
 import  {useNavigate}  from "react-router-dom";
+import { AlertContext } from '../context/AlertContext';
 
 export default function LoginForm() {
     const {userLogin} = useContext(NoteContext)
+    const {settingAlert } = useContext(AlertContext)
     const [cred , setCred] = useState({email: "", password : ""})
     const history = useNavigate()
 
     const sendingCred = async (e)=> {
         e.preventDefault()
-        if(await userLogin(cred)){
+        const return_value = await userLogin(cred)
+        if(return_value=== true){
             history("/")
+            settingAlert("primary", "You're Welcome")
+        }
+        else {
+            settingAlert("danger", return_value )
+
         }
     }
 
