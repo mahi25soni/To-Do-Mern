@@ -59,8 +59,10 @@ export default function Navbar() {
             </ul>
           </div>
           <div className="d-flex"> 
-            <Link className="btn btn-primary btn-sm mx-2" to="/login">Login</Link>
-            <Link className="btn btn-primary btn-sm mx-2" to="/signup">SignUp</Link>
+          {!localStorage.getItem("authorization") &&  <div>
+        <Link className="btn btn-primary btn-sm mx-2" to="/login">Login</Link>
+            <Link className="btn btn-primary btn-sm mx-2" to="/signup">SignUp</Link> 
+          </div> }
             <button className="btn btn-dark btn-sm mx-2" onClick={logoutButton}>LogOut</button>
 
           </div>
