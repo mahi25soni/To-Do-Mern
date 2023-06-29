@@ -88,7 +88,7 @@ const NoteState = (props) => {
             return status;
         }
         else {
-
+            alert(data)
             return data;
         }
         
@@ -103,13 +103,13 @@ const NoteState = (props) => {
             },
             body : JSON.stringify({username, email, password})
         })
-        const {status, data} = await response.json()
+        const {status} = await response.json()
         if(status){
-            alert("Welcome to your private data, Please Login to continue...")
             return status
+
         }
         else {
-            alert(data)
+            alert("New Email Id is already being used")
             return status;
         }
         

@@ -5,10 +5,11 @@ import { AlertContext } from '../context/AlertContext'
 export default function ViewNote() {
     const {note , getAllNotes, editNote} = useContext(NoteContext)
     const {settingAlert } = useContext(AlertContext)
+
     useEffect(() => {
       getAllNotes()
-      // eslint-disable-next-line 
-    },[])
+        // eslint-disable-next-line 
+    })
 
     const refUpdate = useRef(null)
     const refCloseModal = useRef(null)
@@ -64,13 +65,13 @@ export default function ViewNote() {
         </div>
         </div>
         <h2 className='text-center'>Your Tasks</h2>
-        <div className="row">
+        {(note.length !== undefined) ? <div className="row">
         {note.map((element , i)=> {
             return <div className="col col-sm-3 "> 
             <Noteitem  key={i}  note = {element} editButton={updateNote}></Noteitem>
             </div>
         })}
-        </div>
+        </div>: ""}
     </div>
     </>
   )

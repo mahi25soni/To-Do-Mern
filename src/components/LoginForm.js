@@ -16,9 +16,7 @@ export default function LoginForm() {
             history("/")
             settingAlert("primary", "You're Welcome")
         }
-        else {
-            settingAlert("primary", "You're Welcome")
-        }
+
     }   
 
     const credOnChange = (event)=>{

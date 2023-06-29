@@ -1,22 +1,27 @@
 import React, { useState , useContext} from 'react'
 import { NoteContext } from '../context/notes/NoteContext'
 import  {useNavigate}  from "react-router-dom";
+import { AlertContext } from '../context/AlertContext';
 
 export default function SignupForm() {
 
     const {userSignup} = useContext(NoteContext)
+    const { settingAlert }= useContext(AlertContext)
     const [cred , setCred] = useState({username:"", email: "", password : ""})
     const history = useNavigate()
 
     const sendingCred = async (e)=> {
         e.preventDefault()
-        if(await userSignup(cred)){
+        const return_value = await userSignup(cred)
+
+        if(return_value){
             history("/login")
+            settingAlert("primary", "Welcome to your private data, Please Login to continue...")
         }
     }
 
     const credOnChange = (event)=>{
-        
+        event.preventDefault()
         setCred({...cred, [event.target.id] : event.target.value})
 
     }
@@ -38,7 +43,7 @@ export default function SignupForm() {
         </div>
         <div className='text-center'>
 
-        <button type="submit" className="btn btn-outline-dark" >Login</button>
+        <button type="submit" className="btn btn-outline-dark" >Sign Up</button>
         </div>
     </form>
     </div>
