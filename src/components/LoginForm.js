@@ -17,13 +17,12 @@ export default function LoginForm() {
             settingAlert("primary", "You're Welcome")
         }
         else {
-            settingAlert("danger", return_value )
-
+            settingAlert("primary", "You're Welcome")
         }
-    }
+    }   
 
     const credOnChange = (event)=>{
-        
+        event.preventDefault()
         setCred({...cred, [event.target.id] : event.target.value})
     }
   return (

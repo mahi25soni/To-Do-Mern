@@ -65,7 +65,7 @@ export default function ViewNote() {
         </div>
         <h2 className='text-center'>Your Tasks</h2>
         <div className="row">
-        {note.map((i, element)=> {
+        {note.map((element , i)=> {
             return <div className="col col-sm-3 "> 
             <Noteitem  key={i}  note = {element} editButton={updateNote}></Noteitem>
             </div>

@@ -16,7 +16,6 @@ export default function Noteitem(props) {
   }
 
 
-
   return (
     <>
     <div className="container mt-2">
