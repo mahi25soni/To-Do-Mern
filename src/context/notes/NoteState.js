@@ -4,7 +4,7 @@ import { useState} from 'react'
 
 const NoteState = (props) => {
 
-    let basicUrl = "http://localhost:5000/tasks/"
+    let basicUrl = "https://merntodobackend-w7r9.onrender.com/tasks/"
     // let authToken = localStorage.getItem("authorization")
     const [ note, setNote ] = useState([])
 
@@ -74,7 +74,7 @@ const NoteState = (props) => {
 
 
     const userLogin = async ({email, password}) =>{
-        const response = await fetch("http://localhost:5000/auth/login/", {
+        const response = await fetch("https://merntodobackend-w7r9.onrender.com/auth/login/", {
             method : "POST",
             headers : {
                 "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const NoteState = (props) => {
 
     
     const userSignup = async ({username, email, password}) =>{
-        const response = await fetch("http://localhost:5000/auth/register/", {
+        const response = await fetch("https://merntodobackend-w7r9.onrender.com/auth/register/", {
             method : "POST",
             headers : {
                 "Content-Type": "application/json",
